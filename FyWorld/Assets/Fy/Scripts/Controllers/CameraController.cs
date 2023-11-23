@@ -38,7 +38,7 @@ namespace Fy.Controllers {
 
 		/// This will update the camera position and camera zoom.
 		private void UpdateCamera() {
-			if (Input.GetMouseButton(2)) {
+			if (Input.GetMouseButton(1)) {
 				Vector3 diff = this._lastMousePosition - this.mousePosition;
 
 				if (diff != Vector3.zero) {

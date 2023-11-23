@@ -62,6 +62,8 @@ namespace Fy.Characters.AI {
 		}
 
 		public void Enqueue(Target target) {
+			if (target == null || Loki.map[target.position] == null)
+				return;
 			Loki.map[target.position].reserved = true; // @Check adj
 			this.targets.Enqueue(target);
 		}
@@ -91,16 +93,22 @@ namespace Fy.Characters.AI {
 
 		public void Next() {
 			this.Free();
-			this.current = this.targets.Dequeue();
+			if (this.targets.Count > 0)
+				this.current = this.targets.Dequeue();
 		}
 	}
 
 	// A target in our game.
 	public class Target {
+		public BaseCharacter character { get; protected set; }
 		public Tilable tilable { get; protected set; }
 		public Vector2Int position { get; protected set; }
 		public Vector2Int closestAdj { get; protected set; }
 
+		public Target(BaseCharacter character) : this(character.position)
+		{
+			this.character = character;
+		}
 		public Target(Tilable tilable) : this(tilable.position) {
 			this.tilable = tilable;
 		}
@@ -139,11 +147,13 @@ namespace Fy.Characters.AI {
 			);
 
 			// Maybe do a max try and error if we reach this.
-			while (Loki.map[targetPosition] == null || Loki.map[targetPosition].blockPath || Loki.map[targetPosition].reserved) {
+			int nbTry = 20;
+			while (nbTry >= 0 && (Loki.map[targetPosition] == null || Loki.map[targetPosition].blockPath || Loki.map[targetPosition].reserved)) {
 				targetPosition = new Vector2Int(
 					Random.Range(position.x-range, position.x+range),
 					Random.Range(position.y-range, position.y+range)
 				);
+				nbTry--;
 			}
 
 			return new Target(targetPosition);

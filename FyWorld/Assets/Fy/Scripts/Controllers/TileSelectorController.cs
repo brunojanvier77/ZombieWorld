@@ -26,11 +26,18 @@ namespace Fy.Controllers {
 			if (Loki.manager.ready) {
 				int i = 0;
 				if (Input.GetMouseButton(0)) { /// Check if we're in building mode;
-					foreach (BaseCharacter character in Loki.map[Loki.cameraController.tileMapMousePosition].characters) {
-						if (i == this.currentIndex) {
-							this.DisplayCharacterData(Loki.cameraController.tileMapMousePosition, character);
+					if (Loki.map[Loki.cameraController.tileMapMousePosition] != null)
+					{
+						foreach (BaseCharacter character in Loki.map[Loki.cameraController.tileMapMousePosition]
+									 .characters)
+						{
+							if (i == this.currentIndex)
+							{
+								this.DisplayCharacterData(Loki.cameraController.tileMapMousePosition, character);
+							}
+
+							i++;
 						}
-						i++;
 					}
 				}
 			}
