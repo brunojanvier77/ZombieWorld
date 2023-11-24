@@ -100,16 +100,44 @@ namespace Fy.Characters.AI {
 
 	// A target in our game.
 	public class Target {
-		public BaseCharacter character { get; protected set; }
+		public BaseCharacter targetCharacter { get; protected set; }
+		public int distanceToTarget { get; protected set; }
 		public Tilable tilable { get; protected set; }
 		public Vector2Int position { get; protected set; }
 		public Vector2Int closestAdj { get; protected set; }
 
-		public Target(BaseCharacter character) : this(character.position)
+		public Target(BaseCharacter targetCharacter, int distanceToTarget = 0) : this(targetCharacter.position)
 		{
-			this.character = character;
+			this.targetCharacter = targetCharacter;
+			this.distanceToTarget = distanceToTarget;
+
+			this.position = GetAtGoodDistanceFromTarget(this.targetCharacter, this.distanceToTarget);
 		}
-		public Target(Tilable tilable) : this(tilable.position) {
+
+        private Vector2Int GetAtGoodDistanceFromTarget(BaseCharacter targetCharacter, int distanceToTarget)
+		{
+			Vector2 randomOrientation = new Vector2(
+				   Mathf.Cos(UnityEngine.Random.Range(0, 360)),
+				   Mathf.Sin(UnityEngine.Random.Range(0, 360))
+			   );
+			Vector2Int targetPosition = targetCharacter.position + new Vector2Int((int)Mathf.Round(distanceToTarget * randomOrientation.x), (int)Mathf.Round(distanceToTarget * randomOrientation.y));
+
+			// Maybe do a max try and error if we reach this.
+			int nbTry = 20;
+			while (nbTry >= 0 && (Loki.map[targetPosition] == null || Loki.map[targetPosition].blockPath || Loki.map[targetPosition].reserved))
+			{
+				randomOrientation = new Vector2(
+					   Mathf.Cos(UnityEngine.Random.Range(0, 360)),
+					   Mathf.Sin(UnityEngine.Random.Range(0, 360))
+				   );
+
+				targetPosition = targetCharacter.position + new Vector2Int((int)Mathf.Round(distanceToTarget * randomOrientation.x), (int)Mathf.Round(distanceToTarget * randomOrientation.y));
+				nbTry--;
+			}
+			return targetPosition;
+		}
+
+        public Target(Tilable tilable) : this(tilable.position) {
 			this.tilable = tilable;
 		}
 
@@ -142,16 +170,16 @@ namespace Fy.Characters.AI {
 
 		public static Target GetRandomTargetInRange(Vector2Int position, int range = 5) {
 			Vector2Int targetPosition = new Vector2Int(
-				Random.Range(position.x-range, position.x+range),
-				Random.Range(position.y-range, position.y+range)
+				UnityEngine.Random.Range(position.x-range, position.x+range),
+				UnityEngine.Random.Range(position.y-range, position.y+range)
 			);
 
 			// Maybe do a max try and error if we reach this.
 			int nbTry = 20;
 			while (nbTry >= 0 && (Loki.map[targetPosition] == null || Loki.map[targetPosition].blockPath || Loki.map[targetPosition].reserved)) {
 				targetPosition = new Vector2Int(
-					Random.Range(position.x-range, position.x+range),
-					Random.Range(position.y-range, position.y+range)
+					UnityEngine.Random.Range(position.x-range, position.x+range),
+					UnityEngine.Random.Range(position.y-range, position.y+range)
 				);
 				nbTry--;
 			}

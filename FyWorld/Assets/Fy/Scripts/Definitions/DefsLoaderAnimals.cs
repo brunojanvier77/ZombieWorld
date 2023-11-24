@@ -25,9 +25,6 @@ namespace Fy.Definitions {
 			Defs.AddAnimal(new AnimalDef{
 				uid = "human",
 				shortDesc = "Weid animal.",
-				/*graphics = new GraphicDef{
-					textureName = "chicken_front"
-				},*/
 				graphics = new GraphicDef()
 			});
 
@@ -38,6 +35,12 @@ namespace Fy.Definitions {
 					textureName = "chicken_front",
 					size = new Vector2(.7f, .7f)
 				},
+			});
+			Defs.AddAnimal(new AnimalDef
+			{
+				uid = "zombie",
+				shortDesc = "A zombie.",
+				graphics = new GraphicDef()
 			});
 		}
 	}

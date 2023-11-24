@@ -56,7 +56,7 @@ namespace Fy.UI {
 
 	    void Start()
 	    {
-	    	int tabCount = 6;
+	    	int tabCount = 5;
 	    	this.buttons = new MenuOrderButton[tabCount];
 	    	this.tabs = new MenuOrderTab[tabCount];
 
@@ -64,8 +64,7 @@ namespace Fy.UI {
 	        this.AddTab("Zones", 1);
 	        this.AddTab("Structures", 2);
 	        this.AddTab("Production",3);
-	        this.AddTab("Magic", 4);
-	        this.AddTab("Combat", 5);
+	        this.AddTab("Combat", 4);
 	        this.currentOrder = null;
 	        this.Reset();
 	    }

@@ -9,6 +9,7 @@
 using System.Collections.Generic;
 using Fy.Definitions;
 using System;
+using UnityEngine;
 
 namespace Fy.Characters.AI {
 	public enum TaskState {
@@ -24,7 +25,9 @@ namespace Fy.Characters.AI {
 		Harvest,
 		Sow, 
 		HaulRecipe,
-		Dirt
+		Dirt,
+		EatHuman,
+		Attack
 	}
 
 	public class Task {
@@ -69,7 +72,17 @@ namespace Fy.Characters.AI {
 				case TaskType.HaulRecipe:
 					this.taskClass = new HaulRecipeJob(character, this);
 					break;
-				default: 
+				case TaskType.Eat:
+					this.taskClass = new TaskEat(character, this);
+					break;
+				case TaskType.EatHuman:
+					this.taskClass = new TaskEatHuman(character, this);
+					break;
+				case TaskType.Attack:
+					this.taskClass = new TaskAttack(character, this);
+					break;
+				default:
+					Debug.Log("why no task type match?" + this.def.taskType);
 					break;
 			}
 		}

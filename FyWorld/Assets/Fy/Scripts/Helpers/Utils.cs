@@ -7,6 +7,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 using UnityEngine;
+using System;
 
 namespace Fy.Helpers {
 	public static class Utils {
@@ -33,5 +34,28 @@ namespace Fy.Helpers {
 				Mathf.Pow((float)a.y-(float)b.y, 2)				
 			);
 		}
-	}
+
+		public static Vector2Int generatePositionFarFromCenter(int mapWidth, int mapHeight)
+		{
+			System.Random rand = new System.Random(Environment.TickCount);
+			double u1 = rand.NextDouble(); 
+
+			if(u1 < 0.25)
+            {
+				return new Vector2Int(1, UnityEngine.Random.Range(0,mapHeight));
+			}
+			else if(u1 < 0.5)
+			{
+				return new Vector2Int(mapWidth-2, UnityEngine.Random.Range(0, mapHeight));
+
+			}
+			else if (u1 < 0.75)
+			{
+				return new Vector2Int(UnityEngine.Random.Range(0, mapWidth), mapHeight - 2 );
+
+			}
+			return new Vector2Int(UnityEngine.Random.Range(0, mapWidth), 1);
+		}
+
+}
 }

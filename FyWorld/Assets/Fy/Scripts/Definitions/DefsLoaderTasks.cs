@@ -67,6 +67,18 @@ namespace Fy.Definitions {
 				uid = "task_eat",
 				taskType = TaskType.Eat
 			});
+
+			Defs.AddTask(new TaskDef
+			{
+				uid = "task_eathuman",
+				taskType = TaskType.EatHuman
+			});
+
+			Defs.AddTask(new TaskDef
+			{
+				uid = "task_attack",
+				taskType = TaskType.Attack
+			});
 		}
 	}
 }

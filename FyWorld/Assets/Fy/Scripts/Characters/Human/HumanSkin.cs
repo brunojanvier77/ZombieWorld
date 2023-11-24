@@ -36,8 +36,8 @@ namespace Fy.Characters {
 				this.bodyID = 0;
 				this.hairColorID = Defs.colorPallets["human_hair"].GetRandomID();
 				this.bodyColorID = Defs.colorPallets["human_body"].GetRandomID();
-				this.eyeID = Random.Range(0, Settings.EYE_COUNT);
-				this.hairID = Random.Range(0, Settings.HAIR_COUNT);
+				this.eyeID = Random.Range(1, Settings.EYE_COUNT);
+				this.hairID = Random.Range(1, Settings.HAIR_COUNT);
 				this.headID = 0;
 			}
 		}

@@ -18,7 +18,9 @@ namespace Fy.Characters {
 	public abstract class BaseCharacter : Entity {
 		/* Definition */
 		public LivingDef def { get; protected set; }
-		public Inventory inventory { get; protected set; }
+
+
+        public Inventory inventory { get; protected set; }
 
 		/* All statistics */
 		public CharacterStats stats { get; protected set; }
@@ -67,8 +69,11 @@ namespace Fy.Characters {
 
 		/// Uddate stats, movement, AI
 		public virtual void Update() {
-			this.brain.Update();
-			this.stats.Update();
+            if (!this.stats.dead)
+            {
+				this.brain.Update();
+				this.stats.Update();
+			}
 		}
 
 		/// Character default draw method
@@ -81,6 +86,10 @@ namespace Fy.Characters {
 				this._mesh = MeshPool.GetPlaneMesh(this.def.graphics.size);
 			}
 
+            if (this.stats.dead)
+            {
+				this.graphics.material.color = Color.red;
+			}
 			Graphics.DrawMesh(
 				this._mesh,
 				this.movement.visualPosition,
@@ -88,6 +97,27 @@ namespace Fy.Characters {
 				this.graphics.material,
 				0
 			);
+		}
+
+
+		internal void GetDamage(int damage)
+		{
+			this.stats.vitals[Vitals.Health].currentValue -= 20*damage;
+			Debug.Log(this.name + " get damage: " + damage);
+			Debug.Log(this.name + " health: " + this.stats.vitals[Vitals.Health].currentValue);
+
+
+			if (this.stats.vitals[Vitals.Health].currentValue > 0)
+			{
+				// TODO animate hit and knockback
+				AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+			}
+			else
+			{
+				// TODO animate death
+				AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+			}
+
 		}
 
 		public void DropOnTheFloor() {

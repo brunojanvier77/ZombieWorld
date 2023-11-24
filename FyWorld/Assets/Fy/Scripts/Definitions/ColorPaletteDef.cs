@@ -22,6 +22,11 @@ namespace Fy.Definitions {
 		public int GetRandomID() {
 			return Random.Range(0, this.colors.Count);
 		}
+
+		public int GetLastID()
+		{
+			return this.colors.Count - 1;
+		}
 	}
 
 	[System.Serializable]

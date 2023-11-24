@@ -81,20 +81,39 @@ namespace Fy {
 			Loki.map.UpdateConnectedBuildings();
 			///// TEST WALLS	
 
-			/*for (int i = 0; i < 5; i++) {
-				this.map.SpawnCharacter(new Animal(new Vector2Int(15,15), Defs.animals["chicken"]));
-			}*/
+			for (int i = 0; i < 5; i++) {
+				this.map.SpawnAnimal(new Animal(new Vector2Int(15,15), Defs.animals["chicken"]));
+			}
 			GrowArea area = new GrowArea(Defs.plants["carrot"]);
 			area.Add(new RectI(new Vector2Int(15,15), 6, 6));
 
 			StockArea stockarea = new StockArea(Defs.empty);
 			stockarea.Add(new RectI(new Vector2Int(5,5), 6, 6));
 
-			for (int i = 0; i < 5; i++) {
-				this.map.SpawnCharacter(new Human(new Vector2Int(10,10), Defs.animals["human"]));
+			int nbHumans = 6;
+			while (nbHumans >= 0) {
+				Vector2Int position = new Vector2Int(Random.Range(mapSize.x / 2 - 25, (mapSize.x / 2 + 25)), Random.Range(mapSize.y / 2 - 25, mapSize.y / 2 + 25));
+				 position = new Vector2Int(10,10);
+				TileProperty tileProperty = Loki.map[position];
+				if (tileProperty != null && !tileProperty.blockPath)
+				{
+					this.map.SpawnCharacter(new Human(position, nbHumans > 3, Defs.animals["human"]));
+					nbHumans--;
+				}
 			}
-			//Fy.Characters.AI.TargetList.GetRandomTargetInRange(new Vector2Int(10, 10));
-			//new WindowBuildMenu();
+
+			int nbZombies = 50;
+			while (nbZombies >= 0)
+			{
+				Vector2Int position = new Vector2Int(12, 12);
+				TileProperty tileProperty = Loki.map[position];
+				if (tileProperty != null && !tileProperty.blockPath)
+				{
+					this.map.SpawnZombie(new Zombie(position, Defs.animals["zombie"]));
+					nbZombies--;
+				}
+			}
+			
 		}
 
 
@@ -112,14 +131,29 @@ namespace Fy {
 		}
 
 		// Draw the regions
-		void Update() {
-			if (this._ready) {
-				this.map.DrawTilables();
-				this.map.DrawCharacters();
+		void Update()
+		{
+			if (this._ready)
+			{
+					this.map.DrawTilables();
+					this.map.DrawZombies();
+					this.map.DrawAnimals();
+					this.map.DrawCharacters();
+
+				if (this.map.characters.Count == 0)
+				{
+					GameOver();
+				}
 			}
 		}
 
-		void LateUpdate() {
+        private void GameOver()
+        {
+			AudioManager.instance.PlaySfx(AudioManager.Sfx.Lose);
+			this._ready = false;
+        }
+
+        void LateUpdate() {
 			if (this._ready) {
 				this.map.CheckAllMatrices();
 			}
@@ -139,7 +173,7 @@ namespace Fy {
 					DebugRenderer.DrawReserved();
 				}
 				if (this.DrawPaths) {
-					foreach (BaseCharacter character in this.map.characters) {
+					foreach (BaseCharacter character in Loki.map.characters) {
 						DebugRenderer.DrawCurrentPath(character.movement);
 					}
 				}

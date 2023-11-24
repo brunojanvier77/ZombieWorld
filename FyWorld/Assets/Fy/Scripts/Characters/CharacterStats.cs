@@ -26,13 +26,19 @@ namespace Fy.Characters {
 		/* Are we sleeping */
 		public bool sleep { get; protected set; }
 
+		/* Are we dead */
+		public bool dead { get; protected set; }
+
 		/* Callback when we wake up */
 		public Action onWakeUp = null;
 
 		/* Callback when we go to sleep */
 		public Action onSleep = null;
 
-		public CharacterStats() {
+
+		public CharacterStats()
+		{
+			this.dead = false;
 			this.sleep = false;
 			this.stats = new Dictionary<Stats, Stat>();
 			foreach (Stats stat in StatsUtils.stats) {
@@ -106,6 +112,10 @@ namespace Fy.Characters {
 
 		// Update stats
 		public virtual void Update() {
+			if (this.dead)
+			{
+				return;
+			}
 			if (!this.sleep) {
 				if (this.vitals[Vitals.Energy].currentValue > 0) {
 					this.vitals[Vitals.Energy].currentValue -= .15f;
@@ -118,6 +128,11 @@ namespace Fy.Characters {
 
 			if (this.vitals[Vitals.Hunger].currentValue > 0) {
 				this.vitals[Vitals.Hunger].currentValue -= .3f;
+			}
+
+			if (this.vitals[Vitals.Health].currentValue <= 0)
+			{
+				this.dead = true;
 			}
 		}
 

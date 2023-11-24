@@ -13,6 +13,7 @@ using Fy.Entities;
 using Fy.Helpers;
 using Fy.Definitions;
 using Fy.Characters.AI;
+using Fy.Characters;
 
 namespace Fy.World {
 	public struct BucketResult {
@@ -30,6 +31,30 @@ namespace Fy.World {
 				if (currentMinDistance < minDistance) {
 					minDistance = currentMinDistance;
 					result = tilable;
+				}
+			}
+
+			return result;
+		}
+
+		public static BaseCharacter NextToAttack(Vector2Int position, IEnumerable<BaseCharacter> zombies)
+		{
+			BaseCharacter zombie = ClosestHumanFromEnum(position, zombies);
+			return zombie;
+		}
+
+
+		public static BaseCharacter ClosestHumanFromEnum(Vector2Int position, IEnumerable<BaseCharacter> characters)
+		{
+			BaseCharacter result = null;
+			float minDistance = float.MaxValue;
+			foreach (BaseCharacter c in characters)
+			{
+				float currentMinDistance = Utils.Distance(position, c.position);
+				if (currentMinDistance < minDistance)
+				{
+					minDistance = currentMinDistance;
+					result = c;
 				}
 			}
 

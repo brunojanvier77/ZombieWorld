@@ -33,6 +33,10 @@ namespace Fy.World {
 
 		/* List of characters on our map */
 		public List<BaseCharacter> characters { get; protected set; }
+		public List<BaseCharacter> animals { get; protected set; }
+		
+		/* List of zombies on our map */
+		public List<BaseCharacter> zombies { get; protected set; }
 
 		/// Let's create a world, that's not ostentatious at all.
 		public Map(int width, int height) {
@@ -43,6 +47,8 @@ namespace Fy.World {
 				this.tiles[position.x + position.y * this.size.y] = new TileProperty(position);
 			}
 			this.characters = new List<BaseCharacter>();
+			this.animals = new List<BaseCharacter>();
+			this.zombies = new List<BaseCharacter>();
 			this.grids = new Dictionary<Layer, LayerGrid>();
 			this.grids.Add(Layer.Ground, new GroundGrid(this.size));
 			this.grids.Add(Layer.Plant, new TilableGrid(this.size));
@@ -104,6 +110,18 @@ namespace Fy.World {
 			this.characters.Add(character);
 		}
 
+		/// Spawn an animal
+		public void SpawnAnimal(BaseCharacter character)
+		{
+			this.animals.Add(character);
+		}
+
+		/// Spawn a Zombie
+		public void SpawnZombie(BaseCharacter character)
+		{
+			this.zombies.Add(character);
+		}
+
 		/// Update drawing for our characters
 		public void DrawCharacters() {
 			foreach (BaseCharacter character in this.characters) {
@@ -111,6 +129,31 @@ namespace Fy.World {
 					character.UpdateDraw();
 				}
 			}
+			characters.RemoveAll(c => c.stats.dead);
+			
+		}
+		/// Update drawing for our animals
+		public void DrawAnimals()
+		{
+			foreach (BaseCharacter character in this.animals)
+			{
+				if (Loki.cameraController.viewRect.Contains(character.position))
+				{
+					character.UpdateDraw();
+				}
+			}
+			animals.RemoveAll(animal => animal.stats.dead);
+		}
+		public void DrawZombies()
+        {
+			foreach (BaseCharacter character in this.zombies)
+			{
+				if (Loki.cameraController.viewRect.Contains(character.position))
+				{
+					character.UpdateDraw();
+				}
+			}
+			zombies.RemoveAll(z => z.stats.dead);
 		}
 
 		/// Spawn a tilable on the map
