@@ -17,40 +17,40 @@ It’s a war / base-building / simulation open source game made with Unity.
 ## Contribute
 FyWorld which this project is forked from gave a solid ground to build upon.
 We already have:
-	* World generation with perlin noise and regions using layered tile grids
-		* high performance rendering - no gameobjects - all the meshes are pooled in memory and drawn directly
-		* every tile have properties to create interesting world (fertility, path cost, etc.)
-		* same for characters which are skinnable and possible to animate
-		* stackable inventory
-	* AI - agents and behaviour tree and path finding
-	* UI - basic UI system to be developed
+  * World generation with perlin noise and regions using layered tile grids
+    * high performance rendering - no gameobjects - all the meshes are pooled in memory and drawn directly
+    * every tile have properties to create interesting world (fertility, path cost, etc.)
+    * same for characters which are skinnable and possible to animate
+    * stackable inventory
+  * AI - agents and behaviour tree and path finding
+  * UI - basic UI system to be developed
 
 
 There are many ways to contribute to the project:
-	* Test play it and report issues or improvement ideas
-	* Help improve audio
-	* Help improve graphics and animations
-	* Help improve the story or the events taking place
-	* Code interesting worlds: 
-		* generate a post-apocalypse city from code
-		* generate a more interesting nature from code
-	* Code interesting behaviours:
-		* the project uses now a behavior tree with a task system. It can go a long way and be much richer and interesting.
-		* the agents have simple needs and this can be further developed.
-	* Code weapon systems and tech tree:
-		* improve combat, logistic and tech in the game
-	* Code vehicle and traffic systems:
-		* vehicles for combat or for carrying things effectively for production and combat
-	* Support Animations and particle systems
-	* Code UI:
-		* there is a lot be done here but we have basic windows and buttons
-		* we have no start screen, no game over screen etc.
-	* Code controllers:
-		* there is a lot be done here but we have basic windows and buttons
-	* Code core stuffs:
-		* improve A* path finding implementation
-		* improve loading/saving game state
-		* optimize
+  * Test play it and report issues or improvement ideas
+  * Help improve audio
+  * Help improve graphics and animations
+  * Help improve the story or the events taking place
+  * Code interesting worlds: 
+    * generate a post-apocalypse city from code
+    * generate a more interesting nature from code
+  * Code interesting behaviours:
+    * the project uses now a behavior tree with a task system. It can go a long way and be much richer and interesting.
+    * the agents have simple needs and this can be further developed.
+  * Code weapon systems and tech tree:
+    * improve combat, logistic and tech in the game
+  * Code vehicle and traffic systems:
+    * vehicles for combat or for carrying things effectively for production and combat
+  * Support Animations and particle systems
+  * Code UI:
+    * there is a lot be done here but we have basic windows and buttons
+    * we have no start screen, no game over screen etc.
+  * Code controllers:
+    * there is a lot be done here but we have basic windows and buttons
+  * Code core stuffs:
+    * improve A* path finding implementation
+    * improve loading/saving game state
+    * optimize
 
 ## Story
 The game will be about keeping your humans alive by giving them food and ammos and weapons to fight the hordes of zombies that are going to constantly go after them
