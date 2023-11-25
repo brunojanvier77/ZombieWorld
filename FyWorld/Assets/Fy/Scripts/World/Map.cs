@@ -31,11 +31,9 @@ namespace Fy.World {
 		/* Tile properties */
 		public TileProperty[] tiles { get; protected set; }
 
-		/* List of characters on our map */
+		/* Lists of characters on our map */
 		public List<BaseCharacter> characters { get; protected set; }
 		public List<BaseCharacter> animals { get; protected set; }
-		
-		/* List of zombies on our map */
 		public List<BaseCharacter> zombies { get; protected set; }
 
 		/// Let's create a world, that's not ostentatious at all.

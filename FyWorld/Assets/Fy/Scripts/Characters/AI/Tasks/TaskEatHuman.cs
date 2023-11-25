@@ -17,7 +17,6 @@ namespace Fy.Characters.AI
 
 		public override bool Perform()
 		{
-
 			BaseCharacter human = (BaseCharacter)this.task.targets.current.targetCharacter;
 			if(human.position == character.position)
             {
